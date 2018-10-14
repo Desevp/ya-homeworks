@@ -1,0 +1,4 @@
+# перечисление игнорируемых stylelint-ом файлов
+
+src/style/mixins.scss
+src/style/style.scss

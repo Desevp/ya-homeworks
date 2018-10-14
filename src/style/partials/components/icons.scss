@@ -1,0 +1,110 @@
+.icon {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+
+  &--prev {
+    background-image: svg-load('../images/icons/prev.svg');
+  }
+
+  &--next {
+    background-image: svg-load('../images/icons/prev.svg');
+    transform: rotate(180deg);
+  }
+
+  &--stats {
+    background-image: svg-load('../images/icons/stats.svg', fill=#333, stroke=#333);
+  }
+
+  &--condicioner {
+    background-image: svg-load('../images/icons/air-conditioner.svg', fill=#333, stroke=#333);
+  }
+
+  &--battery {
+    background-image: svg-load('../images/icons/battery.svg', fill=#333, stroke=#333);
+  }
+
+  &--key {
+    background-image: svg-load('../images/icons/key.svg', fill=#333, stroke=#333);
+  }
+
+  &--fridge {
+    background-image: svg-load('../images/icons/fridge.svg', fill=#333, stroke=#333);
+  }
+
+  &--music {
+    background-image: svg-load('../images/icons/music.svg', fill=#333, stroke=#333);
+  }
+
+  &--router {
+    background-image: svg-load('../images/icons/router.svg', fill=#333, stroke=#333);
+  }
+
+  &--thermal {
+    background-image: svg-load('../images/icons/thermal.svg', fill=#333, stroke=#333);
+  }
+
+  &--kettle {
+    background-image: svg-load('../images/icons/kettle.svg', fill=#333, stroke=#333);
+  }
+
+  &--robot-cleaner {
+    background-image: svg-load('../images/icons/robot-cleaner.svg', fill=#333, stroke=#333);
+  }
+
+  &--ac {
+    background-image: svg-load('../images/icons/ac.svg', fill=#333, stroke=#333);
+  }
+
+  &--cam {
+    background-image: svg-load('../images/icons/cam.svg', fill=#333, stroke=#333);
+  }
+
+  &--stats-white {
+    background-image: svg-load('../images/icons/stats.svg', ll=#fff, stroke=#fff);
+  }
+
+  &--condicioner-white {
+    background-image: svg-load('../images/icons/air-conditioner.svg', ll=#fff, stroke=#fff);
+  }
+
+  &--battery-white {
+    background-image: svg-load('../images/icons/battery.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--key-white {
+    background-image: svg-load('../images/icons/key.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--fridge-white {
+    background-image: svg-load('../images/icons/fridge.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--music-white {
+    background-image: svg-load('../images/icons/music.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--router-white {
+    background-image: svg-load('../images/icons/router.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--thermal-white {
+    background-image: svg-load('../images/icons/thermal.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--kettle-white {
+    background-image: svg-load('../images/icons/kettle.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--robot-cleaner-white {
+    background-image: svg-load('../images/icons/robot-cleaner.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--ac-white {
+    background-image: svg-load('../images/icons/ac.svg', fill=#fff, stroke=#fff);
+  }
+
+  &--cam-white {
+    background-image: svg-load('../images/icons/cam.svg', fill=#fff, stroke=#fff);
+  }
+}

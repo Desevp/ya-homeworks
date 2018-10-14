@@ -1,0 +1,14 @@
+@import '../../node_modules/normalize.css/normalize.css';
+@import './src/style/fonts';
+@import './src/style/variables';
+@import './src/style/mixins';
+@import './src/style/functions';
+@import './src/style/print';
+
+@import './src/style/partials/components/link';
+@import './src/style/partials/components/button';
+@import './src/style/partials/components/icons';
+
+@import './src/style/partials/page';
+@import './src/style/partials/header';
+@import './src/style/partials/footer';

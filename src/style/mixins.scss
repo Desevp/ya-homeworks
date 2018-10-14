@@ -1,0 +1,59 @@
+@mixin font($fontSize, $fontName, $lineHeight) {
+  font-size: $fontSize;
+  font-family: $fontName;
+  line-height: $lineHeight / $fontSize;
+}
+
+@mixin titleH1($color: $grey) {
+  @include font(24px, $font-family, 28px);
+  font-weight: 600;
+  color: $color;
+}
+
+@mixin titleH2($color: $grey) {
+  @include font(18px, $font-family, 21px);
+  font-weight: 600;
+  color: $color;
+}
+
+@mixin titleH3($color: $grey) {
+  @include font(14px, $font-family, 16px);
+  font-weight: 600;
+  color: $color;
+}
+
+@mixin titleH4($color: $grey) {
+  @include font(12px, $font-family, 14px);
+  font-weight: 600;
+  color: $color;
+}
+
+@mixin largeString($color: $grey) {
+  @include font(24px, $font-family, 28px);
+  font-weight: 400;
+  color: $color;
+}
+
+@mixin normalString($color: $grey) {
+  @include font(20px, $font-family, 23px);
+  font-weight: 400;
+  color: $color;
+}
+
+@mixin smallString($color: $grey, $weight: 400) {
+  @include font(18px, $font-family, 21px);
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin extrasmallString($color: $grey, $weight: 400) {
+  @include font(14px, $font-family, 17px);
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin mobileSmallString($color: $grey, $weight: 400) {
+  @include font(12px, $font-family, 14px);
+  font-weight: $weight;
+  color: $color;
+}

@@ -1,0 +1,5 @@
+lib
+**/node_modules
+gulpfile.js
+src/js/common.js
+src/js/vendors.js
