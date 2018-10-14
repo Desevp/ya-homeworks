@@ -16,6 +16,8 @@
   cursor: pointer;
   appearance: none;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
   box-shadow: $shadow-off;
   transition: box-shadow $transition-time;
 

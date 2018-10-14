@@ -1,0 +1,76 @@
+.media-monitor {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  max-height: calc(100vh - 120px - 62px);
+  overflow: hidden;
+  transition: max-height 0.3s, max-width 0.5s;
+
+  &.is-fullscreen {
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  &__wr {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 0;
+  }
+
+  &__section {
+    position: relative;
+    background-color: $body-bg;
+    transition: transform 0.5s;
+
+    &--is-full {
+      z-index: 1;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    max-width: 150px;
+    width: 100%;
+    opacity: 0;
+    visibility: visible;
+    z-index: 2;
+    cursor: pointer;
+    transition: visibility $transition-time, opacity $transition-time;
+
+    &--is-show {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    left: 15px;
+    top: 50px;
+    padding: 20px;
+    border-radius: $border-radius;
+    background-color: rgba($black, 0.4);
+    z-index: 3;
+    transform: scale(0.5);
+    transform-origin: left top;
+  }
+
+  &__controls-title {
+    margin-bottom: 5px;
+    @include extrasmallString($white);
+    color: $white;
+  }
+}
+
+.video-monitor {
+  width: 100%;
+
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
