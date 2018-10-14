@@ -3,7 +3,7 @@
 - [ ] **hw1_adaptive** -  Адаптивная вёрстка;
 - [ ] **hw4_touch** - Работа с сенсорным пользовательским вводом;
 - [ ] **hw3_media** -  Мультимедиа;
-- [ ] **hw4_nodejs** - Nodejs.
+- [x] **hw4_nodejs** - Nodejs.
 
 ```shell
 npm i
