@@ -1,5 +1,3 @@
-console.log('sdf');
-
 function initVideo(video, url) {
     if (Hls.isSupported()) {
         var hls = new Hls();
@@ -16,8 +14,6 @@ function initVideo(video, url) {
     }
 }
 
-
-console.log(document.getElementById('video-1'));
 initVideo(
     document.getElementById('video-1'),
     'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8'
