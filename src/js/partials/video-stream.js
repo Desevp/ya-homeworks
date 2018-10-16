@@ -12,6 +12,8 @@ function initVideo(video, url) {
             video.play();
         });
     }
+
+    return hls;
 }
 
 initVideo(

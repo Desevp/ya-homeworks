@@ -100,6 +100,24 @@
   &__controls-range input {
     width: 100%;
   }
+
+  &__sound {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 54px;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    background-color: $theme-color;
+    z-index: 10;
+    transition: opacity $transition-time, visibility $transition-time;
+
+    &--is-show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 
 .video-monitor {

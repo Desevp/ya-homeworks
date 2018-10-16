@@ -1,20 +1,22 @@
 (function() {
-
-  let videoItems = document.querySelectorAll('.js-show-video');
-  let close = document.querySelector('.js-video-close');
   let monitor = document.querySelector('.media-monitor');
+  let videoSections = monitor.querySelectorAll('.js-show-video');
+  let videoItems = monitor.querySelectorAll('video');
+  let close = monitor.querySelector('.js-video-close');
   let currentFullItem = false;
   let currentNum = false;
-  let controlWrappers = document.querySelectorAll('.media-monitor__controls');
+  let controlWrappers = monitor.querySelectorAll('.media-monitor__controls');
+  let soundElement = monitor.querySelector('.js-video-sound');
+  let soundContext;
 
-  for (let i = 0; i < videoItems.length; i++) {
-    videoItems[i].addEventListener('click', function() {
+  for (let i = 0; i < videoSections.length; i++) {
+    videoSections[i].addEventListener('click', function() {
       let curItem = [].indexOf.call(this.parentElement.children, this);
       fullscrenVideo(this, curItem);
     });
 
-    let inputControlContrast = videoItems[i].querySelector('.media-monitor__control-contrast');
-    let inputControlBrightness = videoItems[i].querySelector('.media-monitor__control-brightness');
+    let inputControlContrast = videoSections[i].querySelector('.media-monitor__control-contrast');
+    let inputControlBrightness = videoSections[i].querySelector('.media-monitor__control-brightness');
 
     inputControlContrast.addEventListener('change', function(e) {
       if (currentFullItem) {
@@ -35,6 +37,7 @@
 
   function fullscrenVideo(item, current) {
     currentNum = current;
+    videoItems[current].muted = false;
     item.classList.add('media-monitor__section--is-full');
     monitor.classList.add('is-fullscreen');
     let leftTrans = (item.offsetLeft > 0)?'-50%':'50%';
@@ -42,8 +45,9 @@
     item.style.transform = `translate(${leftTrans}, ${topTrans}) scale(2, 2)`;
     currentFullItem = item.querySelector('.media-monitor__inner');
     close.classList.add('media-monitor__close--is-show');
+    soundElement.classList.add('media-monitor__sound--is-show');
     controlWrappers[currentNum].classList.add('media-monitor__controls--is-show');
-
+    soundContext = beginAnalyzeSound(videoItems[current]);
   }
 
   function showAllVideo() {
@@ -52,7 +56,10 @@
       section.style.transform = 'translate(0, 0) scale(1, 1)';
       monitor.classList.remove('is-fullscreen');
       close.classList.remove('media-monitor__close--is-show');
+      soundElement.classList.remove('media-monitor__sound--is-show');
       controlWrappers[currentNum].classList.remove('media-monitor__controls--is-show');
+      videoItems[currentNum].muted = true;
+      endAnalyzeSound(soundContext);
 
       let timer = setTimeout(function() {
         section.classList.remove('media-monitor__section--is-full');
@@ -66,4 +73,59 @@
   function changeFilter(item, filter, value) {
     item.style.filter = `${filter}(${value}%)`;
   }
+
+
+function beginAnalyzeSound(videoItem) {
+  let context	= new AudioContext();
+
+  // console.log(videoItems);
+
+  var source = context.createMediaElementSource(videoItem);
+
+  // if (MEDIA_ELEMENT_NODES.has(audio)) {
+  //   source = MEDIA_ELEMENT_NODES.get(audio);
+  // } else {
+  //   source = context.createMediaElementSource(audio);
+  //   MEDIA_ELEMENT_NODES.set(audio, source);
+  // }
+
+  var analyser = context.createAnalyser();
+  analyser.smoothingTimeConstant = 0.3;
+  analyser.fftSize = 1024;
+
+  let node = context.createScriptProcessor(2048, 1, 1);
+  node.onaudioprocess = function() {
+      var array = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(array);
+      soundElement.style.height = `${average(array) * 2}px`
+  }
+
+  source.connect(analyser);
+  source.connect(context.destination);
+  node.connect(context.destination);
+  analyser.connect(node);
+  return context;
+}
+
+function endAnalyzeSound(context) {
+  context.close();
+}
+
+function average(array) {
+  let numbers;
+  if (array[0] instanceof Array) {
+    numbers = array[0];
+  }
+  else if (typeof array[0] == 'number') {
+    numbers = array;
+  }
+  let sum = 0;
+  let average = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  average = sum / numbers.length;
+  return average;
+}
+
 })();
