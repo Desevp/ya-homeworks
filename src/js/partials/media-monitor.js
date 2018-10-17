@@ -7,7 +7,6 @@
   let currentNum = false;
   let controlWrappers = monitor.querySelectorAll('.media-monitor__controls');
   let soundElement = monitor.querySelector('.js-video-sound');
-  let soundContext;
 
   for (let i = 0; i < videoSections.length; i++) {
     videoSections[i].addEventListener('click', function() {
@@ -47,7 +46,7 @@
     close.classList.add('media-monitor__close--is-show');
     soundElement.classList.add('media-monitor__sound--is-show');
     controlWrappers[currentNum].classList.add('media-monitor__controls--is-show');
-    soundContext = beginAnalyzeSound(videoItems[current]);
+    beginAnalyzeSound(videoItems[current]);
   }
 
   function showAllVideo() {
@@ -59,7 +58,7 @@
       soundElement.classList.remove('media-monitor__sound--is-show');
       controlWrappers[currentNum].classList.remove('media-monitor__controls--is-show');
       videoItems[currentNum].muted = true;
-      endAnalyzeSound(soundContext);
+      endAnalyzeSound(context);
 
       let timer = setTimeout(function() {
         section.classList.remove('media-monitor__section--is-full');
@@ -75,25 +74,26 @@
   }
 
 
+let context	= new AudioContext();
+var MEDIA_ELEMENT_NODES = new WeakMap();
+
 function beginAnalyzeSound(videoItem) {
-  let context	= new AudioContext();
+  var source;
+  context.resume();
 
-  // console.log(videoItems);
-
-  var source = context.createMediaElementSource(videoItem);
-
-  // if (MEDIA_ELEMENT_NODES.has(audio)) {
-  //   source = MEDIA_ELEMENT_NODES.get(audio);
-  // } else {
-  //   source = context.createMediaElementSource(audio);
-  //   MEDIA_ELEMENT_NODES.set(audio, source);
-  // }
+  if (MEDIA_ELEMENT_NODES.has(videoItem)) {
+    source = MEDIA_ELEMENT_NODES.get(videoItem);
+  } else {
+    source = context.createMediaElementSource(videoItem);
+    MEDIA_ELEMENT_NODES.set(videoItem, source);
+  }
 
   var analyser = context.createAnalyser();
   analyser.smoothingTimeConstant = 0.3;
   analyser.fftSize = 1024;
 
   let node = context.createScriptProcessor(2048, 1, 1);
+
   node.onaudioprocess = function() {
       var array = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(array);
@@ -104,11 +104,10 @@ function beginAnalyzeSound(videoItem) {
   source.connect(context.destination);
   node.connect(context.destination);
   analyser.connect(node);
-  return context;
 }
 
 function endAnalyzeSound(context) {
-  context.close();
+  context.suspend();
 }
 
 function average(array) {
