@@ -112,6 +112,7 @@
     background-color: $theme-color;
     z-index: 10;
     transition: opacity $transition-time, visibility $transition-time;
+    will-change: height;
 
     &--is-show {
       opacity: 1;

@@ -7,6 +7,7 @@
   let currentNum = false;
   let controlWrappers = monitor.querySelectorAll('.media-monitor__controls');
   let soundElement = monitor.querySelector('.js-video-sound');
+  let soundLine = soundElement.querySelector('.media-monitor__sound-inner');
 
   for (let i = 0; i < videoSections.length; i++) {
     videoSections[i].addEventListener('click', function() {
