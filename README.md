@@ -2,7 +2,7 @@
 
 - [ ] **hw1_adaptive** -  Адаптивная вёрстка;
 - [ ] **hw4_touch** - Работа с сенсорным пользовательским вводом;
-- [ ] **hw3_media** -  Мультимедиа;
+- [x] **hw3_media** -  Мультимедиа;
 - [ ] **hw4_nodejs** - Nodejs.
 
 ```shell
@@ -19,8 +19,12 @@ npm start
           event.scss - стили для карточки-события
           player.scss - стили для плеера
           page.scss - стили страницы и лэйаута
+          media-monitor.scss - наблюдение за домом
     js/
       partials/
         eventTemplate.js  - функция-шаблонизатор Events
+        media-monitor.js - управление камерами
+        video-stream.js - запуск потоков
+
     index.html
 ```
