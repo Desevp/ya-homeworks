@@ -7,7 +7,6 @@
   let currentNum = false;
   let controlWrappers = monitor.querySelectorAll('.media-monitor__controls');
   let soundElement = monitor.querySelector('.js-video-sound');
-  let soundLine = soundElement.querySelector('.media-monitor__sound-inner');
 
   for (let i = 0; i < videoSections.length; i++) {
     videoSections[i].addEventListener('click', function() {
@@ -77,6 +76,7 @@
 
 let context	= new AudioContext();
 var MEDIA_ELEMENT_NODES = new WeakMap();
+let node;
 
 function beginAnalyzeSound(videoItem) {
   var source;
@@ -93,19 +93,25 @@ function beginAnalyzeSound(videoItem) {
   analyser.smoothingTimeConstant = 0.3;
   analyser.fftSize = 1024;
 
-  let node = context.createScriptProcessor(2048, 1, 1);
-
-  node.onaudioprocess = function() {
-      var array = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(array);
-      soundElement.style.height = `${average(array) * 2}px`
+  if (!node) {
+    node = context.createScriptProcessor(2048, 1, 1);
   }
+
+  node.addEventListener('audioprocess', function() {
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(array);
+    showSound(array);
+  });
 
   source.connect(analyser);
   source.connect(context.destination);
   node.connect(context.destination);
   analyser.connect(node);
 }
+
+let showSound = throttle(function(array) {
+  soundElement.style.height = `${average(array) * 2}px`
+}, 50);
 
 function endAnalyzeSound(context) {
   context.suspend();
@@ -126,6 +132,36 @@ function average(array) {
   }
   average = sum / numbers.length;
   return average;
+}
+
+function throttle(func, ms) {
+
+  var isThrottled = false,
+    savedArgs,
+    savedThis;
+
+  function wrapper() {
+
+    if (isThrottled) {
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+
+    func.apply(this, arguments);
+
+    isThrottled = true;
+
+    setTimeout(function() {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
+
+  return wrapper;
 }
 
 })();
