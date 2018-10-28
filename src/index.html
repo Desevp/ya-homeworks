@@ -12,7 +12,117 @@
       <div class="page__content">
         @@include('_include/header.html')
         <main role="main">
+          <div class="container">
+            <div class="section">
+              <h1 class="section__title">Лента событий</h1>
+              <div class="grid"></div>
+            </div>
+          </div>
 
+          <template id="event">
+            <div class="event grid__item" data-event-type>
+              <div class="event__inner">
+                <div class="event__top">
+                  <div class="event__icon icon" data-event-icon>
+                  </div>
+                  <h2 class="event__title" data-event-title>Дверь открыта</h2>
+                </div>
+                <div class="event__info">
+                  <div class="event__device" data-event-source>Сенсор входной двери</div>
+                  <div class="event__time" data-event-time>18:50, Сегодня</div>
+                </div>
+              </div>
+              <div class="event__contol event__close icon">
+              </div>
+              <div class="event__contol event__link icon"></div>
+            </div>
+          </template>
+
+          <template id="event-content">
+            <div class="event__content">
+              <div class="event__content-inner">
+                <div class="event__description" data-event-description>
+                  Так держать! За последнюю неделю вы потратили на 10% меньше ресурсов, чем неделей ранее.
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <template id="event-picture">
+            <div class="event__picture">
+              <picture>
+                <source type="image/svg+xml" srcset="images/Richdata.svg">
+                 <img src="images/Richdata.png" srcset="images/Richdata@2x.png 2x" srcset="images/Richdata@3x.png 3x" alt="">
+              </picture>
+            </div>
+          </template>
+
+          <template id="event-alert">
+            <div class="event__alert">
+              <div class="event__alert-controls">
+                <button class="button event__button button--marked" type="button" name="button">Да</button>
+                <button class="button event__button" type="button" name="button">Нет</button>
+              </div>
+            </div>
+          </template>
+
+          <template id="event-indicators">
+            <div class="event__indicators indicators">
+              <div class="indicators__item">
+                <span class="indicators__name">Температура:</span>
+                <span class="indicators__value indicators__value--temperature" data-event-temperature>24</span>
+              </div>
+              <div class="indicators__item">
+                <span class="indicators__name">Влажность:</span>
+                <span class="indicators__value indicators__value--humidity" data-event-humidity>80</span>
+              </div>
+            </div>
+          </template>
+
+          <template id="event-music">
+            <div class="event__music">
+              <div class="event__player">
+                <div class="player">
+                  <div class="player__info">
+                    <div class="player__cover">
+                      <picture>
+                         <img data-music-track-cover src="" alt="Cover">
+                      </picture>
+                    </div>
+                    <div class='player__track-info'>
+                      <div class="player__track-name" data-music-track-name>
+                        Florence & The Machine - Big God
+                      </div>
+                      <div class="player__progress-bar-wr">
+                        <div class="player__progress-bar">
+                          <div class="player__progress-fill">
+                            <div class="player__progress-pin"></div>
+                          </div>
+                        </div>
+                        <div class="player__progress-time" data-music-track-length >4:31</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="player__controls">
+                    <div class="player__controls-btn">
+                      <div class="player__control icon icon--prev"></div>
+                      <div class="player__control icon icon--next"></div>
+                    </div>
+                    <input class="player__volume" type="range" min="0" max="100" step="1" value="17">
+                    <div class="player__volume-value" data-music-volume>80</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <template id="event-camera">
+            <div class="event__picture">
+              <picture>
+                 <img src="images/image.jpg" alt="">
+              </picture>
+            </div>
+          </template>
         </main>
       </div>
       <div class="page__footer">
