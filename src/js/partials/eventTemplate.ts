@@ -1,16 +1,13 @@
-const events = data.events;
-
-(function() {
+function eventTemplate(this: void) {
+  const events = data.events;
   // микрошаблонизации для Event
-  let contentElement = document.querySelector('.grid');
+  let contentElement: HTMLElement = document.querySelector('.grid');
 
   if (contentElement) {
     renderTemplate(contentElement, 'event', events);
   }
 
   function renderTemplate(element, templateID, events) {
-
-
     events.forEach (function(event) {
       let template = document.getElementById(templateID).content.cloneNode(true);
 
@@ -109,4 +106,4 @@ const events = data.events;
     });
   }
 
-})();
+};

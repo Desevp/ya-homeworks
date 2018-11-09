@@ -28,6 +28,8 @@ var size = require('gulp-size');
 var del = require('del');
 var newer = require('gulp-newer');
 
+var ts = require('gulp-typescript');
+
 var path = {
 	build: {
 		html: 'build/',
@@ -41,7 +43,7 @@ var path = {
 	},
 	src: {
 		html: 'src/*.html',
-		js: 'src/js/common.js',
+		js: 'src/js//**/*.ts',
 		style: 'src/style/style.scss',
 		images: 'src/images/',
     svg: 'src/images/svg/',
@@ -53,7 +55,7 @@ var path = {
 	},
 	watch: {
 		html: 'src/**/*.html',
-		js: 'src/js/**/*.js',
+		js: 'src/js/**/*.ts',
 		style: 'src/style/**/*.*css',
 		images: 'src/images/**/*.*',
     svg: 'src/images/svg/*.*',
@@ -250,18 +252,25 @@ gulp.task('build:js', function () {
       }
     }))
 		.pipe(wait(100))
-    .pipe(gulpIf(isDev, sourcemaps.init()))
+    // .pipe(gulpIf(isDev, sourcemaps.init()))
     .pipe(fileinclude({
       prefix: '@@',
       basepath: '@file',
       indent: true,
     }))
+		.pipe(ts({
+			target: "es5",
+			module: "amd",
+			esModuleInterop: true,
+			noImplicitAny: true,
+			outFile: 'output.js'
+    }))
     .pipe(babel({
       presets: ['es2015']
     }))
     .pipe(concat('script.min.js'))
-    .pipe(gulpIf(!isDev, uglify()))
-		.pipe(gulpIf(isDev, sourcemaps.write('/')))
+    // .pipe(gulpIf(!isDev, uglify()))
+		// .pipe(gulpIf(isDev, sourcemaps.write('/')))
     .pipe(size({
       title: 'Размер',
       showFiles: true,
