@@ -6,8 +6,8 @@ class App {
     this._initStore();
   }
   _initViews() {
-    new Button(this._globalEmitter, this._dispatcher);
-    new Label(this._globalEmitter, this._dispatcher);
+    new NavItems(this._globalEmitter, this._dispatcher);
+    new NavContent(this._globalEmitter, this._dispatcher);
   }
   _initStore() {
     const defaultStore = {

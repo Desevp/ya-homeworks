@@ -121,6 +121,14 @@
     }
   }
 
+  &__content-item {
+    display: none;
+
+    &--is-active {
+      display: block;
+    }
+  }
+
   &__wr {
     @media screen and (max-width: $fablet) {
       position: fixed;

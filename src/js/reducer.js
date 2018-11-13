@@ -5,10 +5,10 @@ function reduce(store, action) {
 
 function reducer(store, action) {
   switch(action.type) {
-  case 'testEvent':
+  case 'navigationEvent':
   return {
     store,
-    data: action.data
+    data: action.tab
   };
   default:
     return store;
