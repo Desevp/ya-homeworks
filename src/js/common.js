@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
   @@include('flux/dispatcher.js')
   @@include('flux/store.js')
   @@include('flux/view.js')
-  @@include('reducer.js')
 
+  @@include('fluxReducer.js')
   @@include('fluxViews.js')
   @@include('fluxCommon.js')
   @@include('partials/main.js')
