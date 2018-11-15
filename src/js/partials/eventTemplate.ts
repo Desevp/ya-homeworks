@@ -1,19 +1,63 @@
+interface EventType {
+  type: string,
+  title: string,
+  source: string,
+  time: string,
+  description: string,
+  icon: string,
+  size: string,
+  data: DataType
+}
+
+interface DataType {
+  temperature: string,
+  humidity: string
+}
+
+interface DataType {
+  albumcover: string,
+  artist: string,
+  track: TrackType,
+  volume: string,
+}
+
+interface DataType {
+  buttons: [string]
+}
+
+interface DataType {
+  image: [string]
+}
+
+interface DataType {
+  type: [string]
+}
+
+interface TrackType {
+  name: string,
+  length: string
+}
+
+
+declare const data: any;
+
 function eventTemplate(this: void) {
-  const events = data.events;
+  const events:[EventType] = data.events;
   // микрошаблонизации для Event
-  let contentElement: HTMLElement = document.querySelector('.grid');
+  const contentElement: HTMLElement = document.querySelector('.grid');
 
   if (contentElement) {
     renderTemplate(contentElement, 'event', events);
   }
 
-  function renderTemplate(element, templateID, events) {
+  function renderTemplate(element: HTMLElement, templateID: string, events:[EventType]) {
     events.forEach (function(event) {
-      let template = document.getElementById(templateID).content.cloneNode(true);
+      debugger
+      const el: HTMLTemplateElement = <HTMLTemplateElement>document.querySelector(`#${templateID}`);
+      const template = <Element>el.content.cloneNode(true);
 
       ///Type
-
-      let tempType = template.querySelector('div[data-event-type]');
+      const tempType = template.querySelector('div[data-event-type]');
       if (event.type ==='critical') {
         tempType.classList.add('event--critical');
       }
@@ -22,82 +66,90 @@ function eventTemplate(this: void) {
       tempType.classList.add(`grid__item--${event.size}`);
 
       //Icon
-      let tempIcon = template.querySelector('div[data-event-icon]');
-      let icon = `icon--${event.icon}${event.type ==='critical'?'-white':''}`;
+      const tempIcon = template.querySelector('div[data-event-icon]');
+      const icon = `icon--${event.icon}${event.type ==='critical'?'-white':''}`;
       tempIcon.classList.add(icon);
 
 
       //Title
-      let tempTitle = template.querySelector('h2[data-event-title]');
+      const tempTitle: HTMLElement = template.querySelector('h2[data-event-title]');
       tempTitle.innerText = event.title;
 
       // Source
-      let tempSource = template.querySelector('div[data-event-source]');
+      const tempSource: HTMLElement = template.querySelector('div[data-event-source]');
       tempSource.innerText = event.source;
 
       // Source
-      let tempTime = template.querySelector('div[data-event-time]');
+      const tempTime:HTMLElement = template.querySelector('div[data-event-time]');
       tempTime.innerText = event.time;
 
 
       // Content
 
       if (event.description) {
-        let templateContent = document.getElementById('event-content').content.cloneNode(true);
+        const templateContentEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-content');
+        const templateContent = <Element>templateContentEl.content.cloneNode(true);
 
-        let templateContentInner = templateContent.querySelector('.event__content-inner');
+        const templateContentInner = templateContent.querySelector('.event__content-inner');
 
         // var tempInner = templateContent.querySelector('.event__inner');
 
         // Description
 
-        let tempDescription = templateContent.querySelector('div[data-event-description]');
+        const tempDescription: HTMLElement = templateContent.querySelector('div[data-event-description]');
         tempDescription.innerText = event.description;
 
         tempType.appendChild(templateContent);
 
         if (event.data && event.data.temperature) {
-          let templateIndicators = document.getElementById('event-indicators').content.cloneNode(true);
+          const templateIndicatorsEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-indicators');
+          const templateIndicators = <Element>templateIndicatorsEl.content.cloneNode(true);
 
-          let tempTemperature = templateIndicators.querySelector('span[data-event-temperature]');
+          const tempTemperature: HTMLElement = templateIndicators.querySelector('span[data-event-temperature]');
 
           tempTemperature.innerText = event.data.temperature;
 
-          let tempHumidity = templateIndicators.querySelector('span[data-event-humidity]');
+          const tempHumidity:HTMLElement = templateIndicators.querySelector('span[data-event-humidity]');
           tempHumidity.innerText = event.data.humidity;
 
           templateContentInner.appendChild(templateIndicators);
         }
 
         if (event.data && event.data.albumcover) {
-          let tempMusic = document.getElementById('event-music').content.cloneNode(true);
+          const tempMusicEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-music');
 
-          let tempMusicTracCover = tempMusic.querySelector('img[data-music-track-cover]');
+
+          const tempMusic = <Element> tempMusicEl.content.cloneNode(true);
+
+          const tempMusicTracCover = tempMusic.querySelector('img[data-music-track-cover]');
           tempMusicTracCover.setAttribute('src', event.data.albumcover);
 
-          let tempMusicTrackName = tempMusic.querySelector('div[data-music-track-name]');
+          const tempMusicTrackName:HTMLElement = tempMusic.querySelector('div[data-music-track-name]');
           tempMusicTrackName.innerText = `${event.data.track.name} - ${event.data.artist}`;
 
-          let tempMusicTrackLength = tempMusic.querySelector('div[data-music-track-length]');
+          const tempMusicTrackLength:HTMLElement = tempMusic.querySelector('div[data-music-track-length]');
           tempMusicTrackLength.innerText = event.data.track.length;
 
-          let tempMusicVolume = tempMusic.querySelector('div[data-music-volume]');
+          const tempMusicVolume:HTMLElement = tempMusic.querySelector('div[data-music-volume]');
           tempMusicVolume.innerText = event.data.volume;
           templateContentInner.appendChild(tempMusic);
         }
 
         if (event.data && event.data.buttons) {
-          let templateAlert = document.getElementById('event-alert').content.cloneNode(true);
+          const templateAlertEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-alert');
+          const templateAlert = <Element> templateAlertEl.content.cloneNode(true);
           templateContentInner.appendChild(templateAlert);
         }
 
         if (event.data && (event.data.type === 'graph')) {
-          let templatePicture = document.getElementById('event-picture').content.cloneNode(true);
+          const templatePictureEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-picture');
+          const templatePicture = <Element> templatePictureEl.content.cloneNode(true);
           templateContentInner.appendChild(templatePicture);
         }
 
         if (event.data && event.data.image) {
-          let templateCamera = document.getElementById('event-camera').content.cloneNode(true);
+          const templateCameraEl:HTMLTemplateElement = <HTMLTemplateElement>document.getElementById('event-camera');
+          const templateCamera = <Element>templateCameraEl.content.cloneNode(true);
           templateContentInner.appendChild(templateCamera);
         }
       }
@@ -107,3 +159,8 @@ function eventTemplate(this: void) {
   }
 
 };
+
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  eventTemplate();
+});

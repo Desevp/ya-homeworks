@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   class toggleMenu {
-    constructor(btnClass) {
+    burger: HTMLElement;
+    constructor(btnClass: string) {
       this.burger = document.querySelector(btnClass);
       this.init();
     }
@@ -16,10 +17,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
   new toggleMenu('.js-menu');
 
-  eventTemplate();
-
 });
-
-window.onload = function() {
-
-};
