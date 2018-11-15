@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="no-js page" lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Яндекс Дом</title>
+    <meta name="description" content="">
+    @@include('_include/page-head.html')
+    <script src="https://code.jquery.com/pep/0.4.2/pep.js"></script>
+    <script type="text/javascript" src="media/events.json"></script>
+  </head>
+  <body>
+    <div class="page__inner">
+      <div class="page__content">
+        @@include('_include/header.html')
+        <main role="main">
+          <div class="container">
+            <div class="section">
+              <div class="monitor">
+                <div class="monitor__screen js-monitor" touch-action="none">
+                  <div class="monitor__screen-inner" touch-action="none">
+                    <img src="images/image.png" alt="Screen">
+                  </div>
+                </div>
+                <div class="monitor__control-panel">
+                  <div class="monitor__scale">
+                  </div>
+                  <div class="monitor__brightness">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <div class="page__footer">
+        @@include('_include/footer.html')
+      </div>
+    </div>
+    @@include('_include/page-bottom.html')
+  </body>
+</html>

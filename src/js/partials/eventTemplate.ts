@@ -30,7 +30,7 @@ interface DataType {
 }
 
 interface DataType {
-  type: [string]
+  type: string|[string]
 }
 
 interface TrackType {
@@ -52,7 +52,6 @@ function eventTemplate(this: void) {
 
   function renderTemplate(element: HTMLElement, templateID: string, events:[EventType]) {
     events.forEach (function(event) {
-      debugger
       const el: HTMLTemplateElement = <HTMLTemplateElement>document.querySelector(`#${templateID}`);
       const template = <Element>el.content.cloneNode(true);
 

@@ -1,17 +1,17 @@
 'use strict';
 window.onload = function () {
-  let monitorEl = document.querySelector('.js-monitor');
+  let monitorEl: HTMLElement = document.querySelector('.js-monitor');
   if (monitorEl) {
     initMonitor(monitorEl);
   }
 };
 
-function initMonitor(el) {
-  let screen = el;
-  let screenInner = el.querySelector('.monitor__screen-inner');
-  let scaleTextCont = document.querySelector('.monitor__scale');
-  let brightnessTextCont = document.querySelector('.monitor__brightness');
-  let coefWidth = 1;
+function initMonitor(el:HTMLElement) {
+  let screen:HTMLElement = el;
+  let screenInner:HTMLElement = el.querySelector('.monitor__screen-inner');
+  let scaleTextCont:HTMLElement = document.querySelector('.monitor__scale');
+  let brightnessTextCont:HTMLElement = document.querySelector('.monitor__brightness');
+  let coefWidth:number = 1;
 
   const nodeState = {
       startPosition: 0,
@@ -22,20 +22,45 @@ function initMonitor(el) {
       curentBright: 0.5
   };
 
-  scaleTextCont.textContent = nodeState.currScale;
-  brightnessTextCont.textContent = nodeState.curentBright * 100;
+  interface Coord {
+    prevX: number,
+    prevY: number
+  }
 
-  let indicatorWidthElement = createWidthIndicator();
+  scaleTextCont.textContent = nodeState.currScale.toString();
+  brightnessTextCont.textContent = (nodeState.curentBright * 100).toString();
+
+  const indicatorWidthElement = createWidthIndicator();
   changeWidthIndicator();
   changePositionIndicator(0);
 
+  interface GestureArrayItem {
+    id: number,
+    startX: number,
+    prevX: number,
+    startY: number,
+    prevY: number
+  }
 
-  let gestureArray = [];
-  let angleStart = 0;
-  let distanceStart = 0;
-  let prev = {};
+  interface prevType {
+    distance?: number,
+    angle?: number,
+    isGest?: boolean|string, // удалось ли определить жест (false или String)
+    delay?: number
+  }
 
-  screenInner.addEventListener('pointerdown', (event) => {
+  interface CoordAngle {
+    x: number,
+    y: number
+  }
+
+
+  let gestureArray: GestureArrayItem[]|[] = [];
+  let angleStart:number = 0;
+  let distanceStart:number = 0;
+  let prev:prevType = {};
+
+  screenInner.addEventListener('pointerdown', (event:PointerEvent) => {
       screen.style.transition = 'none';
       screen.setPointerCapture(event.pointerId);
 
@@ -75,10 +100,6 @@ function initMonitor(el) {
   });
 
   screen.addEventListener('pointermove', (event) => {
-      if (gestureArray.lenght) {
-          return
-      }
-
       if (gestureArray.length === 1) {
         // Жест влево-вправо
         const {startX} = gestureArray[0];
@@ -105,13 +126,14 @@ function initMonitor(el) {
       else {
         if (gestureArray.length === 2) {
           // Обновляем информацию о прикосновении
-          gestureArray.forEach(function(currentGesture){
-            if (event.pointerId === currentGesture.id) {
+
+          for (let i = 0; i < gestureArray.length; i++) {
+            if (event.pointerId === gestureArray[i].id) {
               const {x, y} = event;
-              currentGesture.prevX = x;
-              currentGesture.prevY = y;
+              gestureArray[i].prevX = x;
+              gestureArray[i].prevY = y;
             }
-          });
+          }
 
           let newCoord = {
             x: gestureArray[0].prevX,
@@ -153,9 +175,9 @@ function initMonitor(el) {
               }
             }
 
-            screenInner.style.WebkitTransform = `scale( ${temp}, ${temp})`;
+            screenInner.style.webkitTransform = `scale( ${temp}, ${temp})`;
             nodeState.currScale = temp;
-            scaleTextCont.textContent = Math.round(temp * 100) / 100;
+            scaleTextCont.textContent = (Math.round(temp * 100) / 100).toString();
             return;
           }
 
@@ -167,7 +189,7 @@ function initMonitor(el) {
 
             nodeState.curentBright = brightless;
             screenInner.style.webkitFilter = `brightness(${brightless})`;
-            brightnessTextCont.textContent = Math.round(nodeState.curentBright * 100);
+            brightnessTextCont.textContent = Math.round(nodeState.curentBright * 100).toString();
             return;
           }
           prev.distance = tempDistance;
@@ -178,7 +200,7 @@ function initMonitor(el) {
   });
 
   const cancelEvent = () => {
-      if (gestureArray.lenght) {
+      if (gestureArray.length === 0) {
           return;
       }
 
@@ -212,17 +234,17 @@ function initMonitor(el) {
   }
 
   // Изменение позиции индикатора
-  function changePositionIndicator(value) {
+  function changePositionIndicator(value:number) {
     indicatorWidthElement.style.transform = `translateX(${-value * coefWidth * nodeState.currScale}px)`;
   }
 
   // Расстояние между двумя точками
-  function distance(p1, p2) {
+  function distance(p1:Coord, p2:Coord) {
     return (Math.sqrt(Math.pow((p1.prevX - p2.prevY), 2) + Math.pow((p1.prevY - p2.prevY), 2)));
   }
 
   // Угол между двумя векторами
-  function angle(p1, p2) {
+  function angle(p1:CoordAngle, p2:CoordAngle) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x);
   }
 }
